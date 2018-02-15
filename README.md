@@ -11,9 +11,7 @@ These are:
 
 # Dependencies & Notes
 
-VirtualBox/Vagrant environment is assumed in this README but essential components and their versions include: Python 3, PostgreSQL and the psycopg2 library.
-
-The newsdata.sql database used in this audit trail was not included in this repository as it was too large at 126 mb to push to Github.
+VirtualBox/Vagrant environment is assumed in this README but essential components and their versions include: Python 3, PostgreSQL and the psycopg2 library. The newsdata.sql database that the queries operate upon is also provided in this repository.
 
 # Installation & Setup
 
