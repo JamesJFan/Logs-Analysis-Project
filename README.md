@@ -94,8 +94,7 @@ WHERE status NOT LIKE '%200%'
 GROUP BY date(time);
 ```
 
-#### So we first select the dates we had errors, then we also need to make a total
-#### of all requests on those days
+#### So we first select the dates we had errors, then we also need to make a total of all requests on those days
 
 ```
 CREATE VIEW total_requests AS 
@@ -104,8 +103,7 @@ FROM log
 GROUP BY date(time);
 ```
 
-#### Than we join these two tables so that errors and total requests match up on
-#### the days errors occur and make another view
+#### Than we join these two tables so that errors and total requests match up on the days errors occur and make another view
 
 ```
 CREATE VIEW error_day_total AS 
@@ -115,8 +113,7 @@ WHERE status_errors.date = total_requests.date
 ORDER BY status_errors.date ASC;
 ```
 
-#### Now to divide those total errors on those days by the total requests on those
-#### days to find the percentage and make this another view
+#### Now to divide those total errors on those days by the total requests on those days to find the percentage and make this another view
 
 ```
 CREATE VIEW error_percent AS 
@@ -126,8 +123,7 @@ GROUP BY date, percent
 ORDER BY date ASC;
 ```
 
-#### Now take that view and filter out all the percentages that are not greater
-#### or equal to 1
+#### Now take that view and filter out all the percentages that are not greater or equal to 1
 
 ```
 SELECT date, percent FROM error_percent WHERE percent >= 1;
