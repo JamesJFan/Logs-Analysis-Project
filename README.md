@@ -31,11 +31,11 @@ This houses the program the calls the queries from the database in the virtual m
 # 2.) newsdata.sql
 This will create the data tables that the program draws from from within the Virtual Machine.
 
-#SQL Audit Trail
+# SQL Audit Trail
 
-##Log_Q2 - Audit Trail
+## Log_Q2 - Audit Trail
 
-###Creates a table connecting author ID, article titles, and views.
+### Creates a table connecting author ID, article titles, and views.
 
 ```
 SELECT articles.author, articles.title, count(*) as views      
@@ -48,7 +48,7 @@ GROUP BY (regexp_split_to_array(path, E'/article/'))[2], articles.title, article
 ORDER BY views DESC;
 ```
 
-###Created a View for Author IDs and views
+### Created a View for Author IDs and views
 
 ```
 CREATE VIEW author_id_views AS 
@@ -61,7 +61,7 @@ GROUP BY (regexp_split_to_array(path, E'/article/'))[2], articles.author
 ORDER BY views DESC;
 ```
 
-###Then Created the view author_total_views
+### Then Created the view author_total_views
 
 ```
 CREATE VIEW author_total_views AS      
@@ -71,7 +71,7 @@ GROUP BY author
 ORDER BY views DESC;
 ```
 
-###Joined author table with author_total_views view-table
+### Joined author table with author_total_views view-table
 
 ```
 SELECT authors.name, author_total_views.views     
@@ -82,9 +82,9 @@ ORDER BY views DESC
 LIMIT 3;
 ```
 
-##Log_Q3 - Audit Trail
+## Log_Q3 - Audit Trail
 
-###Creating a view that holds the total number of errors made on a certain day
+### Creating a view that holds the total number of errors made on a certain day
 
 ```
 CREATE VIEW status_errors AS  
@@ -94,8 +94,8 @@ WHERE status NOT LIKE '%200%'
 GROUP BY date(time);
 ```
 
-####So we first select the dates we had errors, then we also need to make a total
-####of all requests on those days
+#### So we first select the dates we had errors, then we also need to make a total
+#### of all requests on those days
 
 ```
 CREATE VIEW total_requests AS 
@@ -104,8 +104,8 @@ FROM log
 GROUP BY date(time);
 ```
 
-####Than we join these two tables so that errors and total requests match up on
-####the days errors occur and make another view
+#### Than we join these two tables so that errors and total requests match up on
+#### the days errors occur and make another view
 
 ```
 CREATE VIEW error_day_total AS 
@@ -115,8 +115,8 @@ WHERE status_errors.date = total_requests.date
 ORDER BY status_errors.date ASC;
 ```
 
-####Now to divide those total errors on those days by the total requests on those
-####days to find the percentage and make this another view
+#### Now to divide those total errors on those days by the total requests on those
+#### days to find the percentage and make this another view
 
 ```
 CREATE VIEW error_percent AS 
@@ -126,8 +126,8 @@ GROUP BY date, percent
 ORDER BY date ASC;
 ```
 
-####Now take that view and filter out all the percentages that are not greater
-####or equal to 1
+#### Now take that view and filter out all the percentages that are not greater
+#### or equal to 1
 
 ```
 SELECT date, percent FROM error_percent WHERE percent >= 1;
